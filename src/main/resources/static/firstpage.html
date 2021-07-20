@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>welcome </title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        
+        function getData(){
+            var parag='';
+            console.log('getting data .... ');
+            $.ajax({
+                type: "get",
+                url: "http://localhost:8080/api/first/all",
+                
+                
+                success: function (data) {
+                    var autos = '';
+                    $.each(data, function( index, value ) {
+                    console.log( value.model+' - '+value.year+ ' - '+ value.specification + ' - ' + value.color);
+                    autos = ('this all cars '+value.model+' - '+value.year+ ' - '+ value.specification + ' - ' + value.color );
+                        });
+                        $('#texthere').text(autos);
+
+                    
+                  
+                  
+                    
+                    
+                }
+            });
+
+        }
+
+        function postdata(data){
+            var model = $('#model').val();
+            var year = $('#year').val();
+            var specification = $('#specification').val();
+            var color = $('#color').val();
+
+            dataObject ={
+
+                Model : model,
+                Year  : year,
+                Specification : specification,
+                Color : color,
+
+            }
+
+            datajson = JSON.stringify(dataObject);
+
+            $.ajax({
+                type: "post",
+                url: "http://localhost:8080/api/first/new",
+                data:datajson,
+                contentType:"application/json",
+                
+
+
+                
+                
+                success: function (data) {
+                    console.log('post data success...');
+                    
+                    
+                }
+            });
+            getData();
+
+
+
+
+
+        }
+
+
+    </script>
+</head>
+<body>
+<h1>welcome in ons garage</h1>
+
+<label for="model"> Auto Model </label></br></br></br>
+<input type="text" id="model" name="model">
+</br></br></br>
+<label for="year"> produce jaar </label></br></br></br>
+<input type="text" id="year" name="year"></br></br>
+<label for="specifications"> Specifications </label></br></br></br>
+<input type="text" id="specification" name="specifications"></br></br>
+</br></br></br><label for="color"> Color </label></br></br></br>
+<input type="text" id="color" name="color">
+</br></br></br>
+
+<button onclick="postdata()">post it </button>
+<p id="texthere">fewfewf</p>
+
+</body>
+</html>
